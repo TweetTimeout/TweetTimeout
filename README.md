@@ -1,7 +1,7 @@
 # Tweet Timeout
 Script that removes tweets older than 90 days.  
 
-###Motivation
+### Motivation
 Protect yourself from  mining of old tweets which could be used:
 
 - in a social engineering attack
