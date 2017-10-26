@@ -27,22 +27,32 @@ auth.set_access_token(access_token, access_secret)
 
 api = tweepy.API(auth)
 
+# Current time delta 90 days ago
+time_delta = datetime.datetime.now() + datetime.timedelta(-90)
+
 # Loop though each Cursor page to get all tweets
 for tweet in tweepy.Cursor(api.user_timeline).items():
     
     # Created at object from tweet object
     tweet_time = tweet.created_at
-
-    # Current time delta 90 days ago
-    time_delta = datetime.datetime.now() + datetime.timedelta(-90)
-
+    
     # Check if the tweet is older than 90 days
     if tweet_time < time_delta:
         try:
             # destory status with id
             api.destroy_status(tweet.id)
-            print "destory"
         except:
-            print "fail"
-    else:
-        print "pass"
+            print "Delete tweet exception"
+
+# Loop through likes
+for tweet in tweepy.Cursor(api.favorites).items():
+    
+    tweet_time = tweet.created_at
+
+    # Check if the tweet is older than 90 days
+    if tweet_time < time_delta:
+        try:
+            # destory status with id
+            api.destroy_favorite(tweet.id)
+        except:
+            print "Delete likes exception"
